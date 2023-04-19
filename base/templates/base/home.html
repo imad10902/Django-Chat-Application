@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+<div>
+    <div>
+        <h3>Browse Topic</h3>
+        <hr>
+<div>
+    <a href="{% url 'home' %}">All</a>
+</div>
+        {% for topic in topics %}
+        <div>
+            <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a>
+            <!-- these name adds to the url on clicking and query q= topic name  -->
+        </div>
+        {% endfor %}
+    </div>
+</div>>
+<div>
+<a href="{% url 'create-room' %}"></a>
+<div>
+    {% for room in rooms %}
+    <!-- so that anyone cannot edit anyone's room -->
+    {% if request.user != room.host %}
+    <a href = "{% url 'update-room' room.id%}">Edit</a>
+    <a href = "{% url 'delete-room' room.id%}">Delete</a>
+    {% endif %}
+    <h5>@{{room.host.username}}</h5> 
+    <div>{{room.id}}--<a href="/room/{room.id}">{{room.name}}</a></div>
+    {% endfor %}
+</div>
+</div>
+
+{% endblock content %}
